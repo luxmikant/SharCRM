@@ -9,20 +9,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.11",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.453.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^6.26.2",
-    "lucide-react": "^0.453.0",
-    "recharts": "^2.12.7"
+    "recharts": "^2.12.7",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.11",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
-    "vite": "^5.4.8",
     "typescript": "^5.5.6",
-    "@types/react": "^18.2.28",
-    "@types/react-dom": "^18.2.11"
+    "vite": "^5.4.8"
   }
 }

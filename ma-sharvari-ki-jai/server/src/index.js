@@ -9,6 +9,24 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('Production environment: Using Render environment variables');
 }
 
+// Initialize Sentry for error monitoring (before other imports)
+const Sentry = require('@sentry/node');
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || 'development',
+    tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
+    integrations: [
+      Sentry.mongooseIntegration(),
+    ],
+    // Performance monitoring
+    profilesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
+  });
+  // eslint-disable-next-line no-console
+  console.log('Sentry initialized for error monitoring');
+}
+
 const app = require('./app');
 const config = require('./config/db');
 const logger = require('./utils/logger');
@@ -25,6 +43,20 @@ const server = app.listen(PORT, () => {
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
   logger.error(`Error: ${err.message}`);
+  // Capture error in Sentry
+  if (process.env.SENTRY_DSN) {
+    Sentry.captureException(err);
+  }
   // Close server & exit process
   server.close(() => process.exit(1));
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  logger.error(`Uncaught Exception: ${err.message}`);
+  // Capture error in Sentry
+  if (process.env.SENTRY_DSN) {
+    Sentry.captureException(err);
+  }
+  process.exit(1);
 });

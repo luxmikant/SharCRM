@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+const Sentry = require('@sentry/node');
 const { errorHandler } = require('./middleware/errorHandler');
 const crypto = require('crypto');
 const { requireAuth } = require('./middleware/auth');
@@ -15,6 +17,18 @@ const { requireAuth } = require('./middleware/auth');
 dotenv.config();
 
 const app = express();
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: { error: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply rate limiting to API routes
+app.use('/api', limiter);
 
 // Request ID middleware
 app.use((req, res, next) => {
@@ -72,8 +86,17 @@ app.use('/api/segments', requireAuth, require('./routes/segmentRoutes'));
 app.use('/api/dashboard', requireAuth, require('./routes/dashboardRoutes'));
 app.use('/api/templates', require('./routes/templateRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
+// Customer health scores
+app.use('/api/customer-health', require('./routes/customerHealthRoutes'));
+// Activity timeline
+app.use('/api/activities', require('./routes/activityRoutes'));
 // Public, unauthenticated routes
 app.use('/api/public', require('./routes/publicRoutes'));
+
+// Sentry error handler (must be before other error handlers)
+if (process.env.SENTRY_DSN) {
+  Sentry.setupExpressErrorHandler(app);
+}
 
 // Error handler middleware
 app.use(errorHandler);

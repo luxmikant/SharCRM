@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Button from '../components/ui/Button'
 import Card, { CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge'
@@ -11,10 +12,30 @@ import {
   CheckCircle,
   Star,
   ArrowRight,
-  Play
+  Play,
+  Sparkles,
+  Shield,
+  TrendingUp,
+  MessageSquare,
+  Heart
 } from 'lucide-react'
 import { useAuth } from '../state/AuthContext'
 import { apiFetch } from '../api'
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
 
 export default function Landing() {
   const navigate = useNavigate()
@@ -76,10 +97,12 @@ export default function Landing() {
   }, [])
 
   const features = [
-    { icon: Users, title: 'Customer Segmentation', description: 'Create smart customer segments with our intuitive drag-and-drop builder' },
-    { icon: Target, title: 'Campaign Builder', description: 'Design and launch targeted campaigns with visual workflow tools' },
-    { icon: BarChart3, title: 'Advanced Analytics', description: 'Track performance with real-time insights and comprehensive reports' },
-    { icon: Zap, title: 'Automation', description: 'Automate your marketing workflows and save valuable time' },
+    { icon: Users, title: 'Customer Segmentation', description: 'Create smart customer segments with our intuitive drag-and-drop builder', color: 'bg-blue-100 text-blue-600' },
+    { icon: Target, title: 'Campaign Builder', description: 'Design and launch targeted campaigns with visual workflow tools', color: 'bg-green-100 text-green-600' },
+    { icon: BarChart3, title: 'Advanced Analytics', description: 'Track performance with real-time insights and comprehensive reports', color: 'bg-purple-100 text-purple-600' },
+    { icon: Zap, title: 'Automation', description: 'Automate your marketing workflows and save valuable time', color: 'bg-yellow-100 text-yellow-600' },
+    { icon: Heart, title: 'Health Scores', description: 'Track customer health with AI-powered scoring and alerts', color: 'bg-pink-100 text-pink-600' },
+    { icon: MessageSquare, title: 'Email Campaigns', description: 'Send personalized emails with SendGrid integration', color: 'bg-cyan-100 text-cyan-600' },
   ]
 
   const benefits = [
@@ -113,18 +136,76 @@ export default function Landing() {
       </header>
 
       <section className="container mx-auto px-4 py-20 text-center">
-        <Badge className="mb-4 bg-yellow-100 text-yellow-800">✨ New: Advanced Segmentation Tools</Badge>
-        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Build Better Customer<br />Relationships</h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">The modern CRM that combines powerful segmentation, intuitive campaign building, and actionable insights to grow your business faster.</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700" onClick={() => navigate('/login')}>
-            Get Started Free
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-          <Button variant="outline" size="lg">
-            <Play className="w-4 h-4 mr-2" />
-            Watch Demo
-          </Button>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
+            <Badge className="mb-4 bg-yellow-100 text-yellow-800">
+              <Sparkles className="w-3 h-3 mr-1 inline" />
+              New: Customer Health Scores & Email Campaigns
+            </Badge>
+          </motion.div>
+          <motion.h1 
+            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            Build Better Customer<br />Relationships
+          </motion.h1>
+          <motion.p 
+            className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            The modern CRM that combines powerful segmentation, AI-powered health scores, and email campaigns to grow your business faster.
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 group" onClick={() => navigate('/login')}>
+              Get Started Free
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button variant="outline" size="lg">
+              <Play className="w-4 h-4 mr-2" />
+              Watch Demo
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        {/* Floating Stats Animation */}
+        <div className="relative mt-16">
+          <motion.div
+            className="absolute -left-4 top-10 hidden lg:block"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="bg-white p-4 rounded-xl shadow-lg border">
+              <div className="text-2xl font-bold text-green-600">+127%</div>
+              <div className="text-sm text-gray-600">Engagement</div>
+            </div>
+          </motion.div>
+          <motion.div
+            className="absolute -right-4 top-20 hidden lg:block"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="bg-white p-4 rounded-xl shadow-lg border">
+              <div className="text-2xl font-bold text-blue-600">98%</div>
+              <div className="text-sm text-gray-600">Satisfaction</div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -184,17 +265,26 @@ export default function Landing() {
           <h2 className="text-3xl font-bold mb-4">Everything you need to succeed</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">Powerful tools designed to help you understand your customers better and create campaigns that convert.</p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, idx) => (
-            <Card key={idx} className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
-              </CardContent>
-            </Card>
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Card className="text-center hover:shadow-lg transition-all cursor-pointer h-full">
+                <CardContent className="p-6">
+                  <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center mx-auto mb-4`}>
+                    <feature.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </section>

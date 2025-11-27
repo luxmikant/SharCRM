@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@sentry/node": "^10.26.0",
+    "@sentry/react": "^10.26.0",
+    "@sentry/tracing": "^7.120.4",
     "bcryptjs": "^3.0.3",
     "lucide-react": "^0.544.0"
   }

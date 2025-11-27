@@ -101,3 +101,5 @@ export function SelectItem({ value, children, onSelect }: SelectItemProps) {
     </div>
   )
 }
+
+export default Select

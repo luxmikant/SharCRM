@@ -13,6 +13,8 @@ export function Input({ className = '', ...props }: InputProps) {
   )
 }
 
+export default Input
+
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string
 }
