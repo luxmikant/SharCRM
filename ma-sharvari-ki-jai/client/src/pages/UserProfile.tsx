@@ -18,7 +18,7 @@ export default function UserProfile() {
   const [formData, setFormData] = useState({
     name: '',
     bio: '',
-    phone: '',
+    phone: '',  
     preferences: {
       theme: 'system',
       notifications: true,
@@ -149,12 +149,7 @@ export default function UserProfile() {
         <div className="md:col-span-2 space-y-6">
           {/* General Settings */}
           <Card>
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <User className="w-5 h-5 text-gray-500" />
-                <h3 className="text-lg font-medium">General Information</h3>
-              </div>
-            </CardHeader>
+            <CardHeader title="General Information" actions={<User className="w-5 h-5 text-gray-500" />} />
             <CardBody>
               <form onSubmit={handleProfileUpdate} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -210,15 +205,15 @@ export default function UserProfile() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Language</label>
-                      <Select
+                      <select
                         value={formData.preferences.language}
                         onChange={(e) => setFormData({ ...formData, preferences: { ...formData.preferences, language: e.target.value } })}
-                        options={[
-                          { value: 'en', label: 'English' },
-                          { value: 'hi', label: 'Hindi' },
-                          { value: 'es', label: 'Spanish' }
-                        ]}
-                      />
+                        className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -234,12 +229,7 @@ export default function UserProfile() {
 
           {/* Security Settings */}
           <Card>
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <Lock className="w-5 h-5 text-gray-500" />
-                <h3 className="text-lg font-medium">Security</h3>
-              </div>
-            </CardHeader>
+            <CardHeader title="Security" actions={<Lock className="w-5 h-5 text-gray-500" />} />
             <CardBody>
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
