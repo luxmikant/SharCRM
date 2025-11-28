@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  Live at <a href="https://www.sharcrm.app/">https://www.sharcrm.app/</a> • Updated Nov 2025
+</p>
+
+<p align="center">
   <a href="#motivation">Motivation</a> •
   <a href="#features">Features</a> •
   <a href="#ai-capabilities">AI</a> •
