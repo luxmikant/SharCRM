@@ -52,3 +52,4 @@ services:
   # Example: https://your-backend.onrender.com
       - key: VITE_GOOGLE_CLIENT_ID
         sync: false
+
