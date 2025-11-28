@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+  <!-- Icon -->
+  <g transform="translate(0, 0)">
+    <rect x="2" y="5" width="40" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <path d="M2 25 Q22 8 42 25 Q22 42 2 25" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  </g>
+  <!-- Text -->
+  <text x="52" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="currentColor">SHARCRM</text>
+</svg>

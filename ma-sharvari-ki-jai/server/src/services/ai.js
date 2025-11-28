@@ -1,3 +1,15 @@
+/**
+ * AI Service - SharCRM
+ * Provides AI-powered content generation using Google Gemini or fallback templates.
+ * 
+ * Features:
+ * - Message variant suggestions for campaigns
+ * - Full email generation with subject, preheader, and body
+ * - Graceful fallbacks when AI is unavailable
+ * - Support for personalization variables
+ * 
+ * @module services/ai
+ */
 const logger = require('../utils/logger');
 
 async function suggestWithGemini(prompt, opts) {

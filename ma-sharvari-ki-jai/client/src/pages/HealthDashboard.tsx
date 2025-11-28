@@ -1,3 +1,7 @@
+/**
+ * SharCRM Health Dashboard - Customer Health Score Analytics
+ * @version 2.0.0
+ */
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '../state/AuthContext'
@@ -170,8 +174,8 @@ export default function HealthDashboard() {
                       {summary.totalCustomers}
                     </p>
                   </div>
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                    <Users className="w-6 h-6 text-purple-600" />
+                  <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center">
+                    <Users className="w-6 h-6 text-brand-600" />
                   </div>
                 </div>
               </CardBody>

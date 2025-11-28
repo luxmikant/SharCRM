@@ -1,3 +1,8 @@
+/**
+ * SharCRM Campaign Controller - Multi-channel Campaign Management
+ * Handles campaign creation, delivery, and analytics
+ * @version 2.0.0
+ */
 const asyncHandler = require('../utils/asyncHandler');
 const Campaign = require('../models/Campaign');
 const CommunicationLog = require('../models/CommunicationLog');

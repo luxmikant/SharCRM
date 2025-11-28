@@ -1,3 +1,8 @@
+/**
+ * SharCRM Campaign Builder - Visual Campaign Creation Wizard
+ * Features: AI suggestions, template preview, multi-channel support
+ * @version 2.0.0
+ */
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
@@ -50,7 +55,7 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
                   <div
                     className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors ${
                       isActive
-                        ? 'bg-blue-600 text-white border-blue-600'
+                        ? 'bg-brand-500 text-gray-900 border-brand-500'
                         : isCompleted
                         ? 'bg-green-100 text-green-600 border-green-300'
                         : 'bg-gray-100 text-gray-400 border-gray-300'
@@ -177,7 +182,7 @@ function CreativeStep({ campaign, setCampaign, templates, loadTemplateDetails, t
       const vars = variables.split(',').map(v => v.trim()).filter(Boolean)
       const res = await apiFetch<{subject: string, preheader: string, content: string}>(
         '/api/ai/generate-email',
-        { method: 'POST', body: JSON.stringify({ scenario, tone, variables: vars, length, brand: 'MSKJ', channel: campaign.channel }) },
+        { method: 'POST', body: JSON.stringify({ scenario, tone, variables: vars, length, brand: 'SharCRM', channel: campaign.channel }) },
         token
       )
       setCampaign({ ...campaign, subject: res.subject || campaign.subject, preheader: res.preheader || campaign.preheader, content: res.content || campaign.content })
@@ -404,7 +409,7 @@ function ScheduleStep({ campaign, setCampaign }: any) {
               onClick={() => setCampaign({ ...campaign, scheduleType: 'draft', status: 'draft' })}
             >
               <div className="flex items-center gap-3">
-                <span className="text-purple-600">💾</span>
+                <span className="text-brand-600">💾</span>
                 <div>
                   <h4 className="font-medium">Save as Draft</h4>
                   <p className="text-sm text-gray-500">Save for later editing and sending</p>

@@ -1,3 +1,8 @@
+/**
+ * SharCRM Segment Controller - Smart Customer Segmentation
+ * Handles segment CRUD, rule evaluation, and AI suggestions
+ * @version 2.0.0
+ */
 const Segment = require('../models/Segment');
 const Customer = require('../models/Customer');
 const asyncHandler = require('../utils/asyncHandler');

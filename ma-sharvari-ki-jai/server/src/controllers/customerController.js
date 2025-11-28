@@ -1,3 +1,8 @@
+/**
+ * SharCRM Customer Controller - Customer Data Management
+ * Handles customer CRUD, import/export, and health scoring
+ * @version 2.0.0
+ */
 const Customer = require('../models/Customer');
 const asyncHandler = require('../utils/asyncHandler');
 const { buildFilter, validateRuleNode } = require('./segmentController');

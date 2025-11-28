@@ -1,3 +1,7 @@
+/**
+ * SharCRM Segments - Smart Customer Segmentation
+ * @version 2.0.0
+ */
 import React, { useState, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'

@@ -115,6 +115,13 @@ export function getHealthScoreBadge(score: number): { color: string; bg: string;
   return { color: 'text-red-700', bg: 'bg-red-100', label: 'Critical' }
 }
 
+export function getHealthScoreGradient(score: number): string {
+  if (score >= 80) return 'from-green-400 to-emerald-500'
+  if (score >= 60) return 'from-yellow-400 to-amber-500'
+  if (score >= 40) return 'from-orange-400 to-orange-500'
+  return 'from-red-400 to-red-500'
+}
+
 // Currency formatting
 export function formatCurrency(amount: number, currency: string = 'INR'): string {
   return new Intl.NumberFormat('en-IN', {

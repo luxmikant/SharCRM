@@ -1,3 +1,7 @@
+/**
+ * SharCRM Smart Segment Builder - AI-Powered Audience Targeting
+ * @version 2.0.0
+ */
 import React, { useState, useEffect } from 'react'
 import Button from './ui/Button'
 import { useAuth } from '../state/AuthContext'

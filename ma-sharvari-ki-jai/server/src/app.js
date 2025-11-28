@@ -1,3 +1,12 @@
+/**
+ * SharCRM - Express Application Configuration
+ * 
+ * Main application setup including middleware, security, and route configuration.
+ * Built with Express 5.x for modern async error handling and performance.
+ * 
+ * @version 2.0.0
+ * @license MIT
+ */
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -90,6 +99,8 @@ app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/customer-health', require('./routes/customerHealthRoutes'));
 // Activity timeline
 app.use('/api/activities', require('./routes/activityRoutes'));
+// Sales pipeline & analytics
+app.use('/api/sales', require('./routes/salesRoutes'));
 // Public, unauthenticated routes
 app.use('/api/public', require('./routes/publicRoutes'));
 

@@ -8,8 +8,8 @@ if (process.env.SENDGRID_API_KEY) {
 
 class EmailService {
   constructor() {
-    this.fromEmail = process.env.SENDGRID_FROM_EMAIL || 'noreply@mskjcrm.com';
-    this.fromName = process.env.SENDGRID_FROM_NAME || 'MSKJ CRM';
+    this.fromEmail = process.env.SENDGRID_FROM_EMAIL || 'noreply@sharcrm.com';
+    this.fromName = process.env.SENDGRID_FROM_NAME || 'SharCRM';
   }
 
   /**
@@ -151,13 +151,13 @@ class EmailService {
 </head>
 <body>
   <div class="header">
-    <h1 style="margin: 0; font-size: 24px;">MSKJ CRM</h1>
+    <h1 style="margin: 0; font-size: 24px;">SharCRM</h1>
   </div>
   <div class="content">
     ${escapedText}
   </div>
   <div class="footer">
-    <p>© ${new Date().getFullYear()} MSKJ CRM. All rights reserved.</p>
+    <p>© ${new Date().getFullYear()} SharCRM. All rights reserved.</p>
     <p><a href="{{unsubscribe_url}}">Unsubscribe</a></p>
   </div>
 </body>
@@ -181,7 +181,7 @@ class EmailService {
   async sendWelcomeEmail(user) {
     return this.sendEmail({
       to: user.email,
-      subject: 'Welcome to MSKJ CRM! 🎉',
+      subject: 'Welcome to SharCRM! 🎉',
       html: `
 <!DOCTYPE html>
 <html>
@@ -200,12 +200,12 @@ class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0; font-size: 28px;">Welcome to MSKJ CRM! 🎉</h1>
+      <h1 style="margin: 0; font-size: 28px;">Welcome to SharCRM! 🎉</h1>
       <p style="margin: 10px 0 0; opacity: 0.9;">Your journey to better customer relationships starts here</p>
     </div>
     <div class="content">
       <p>Hi ${user.name || 'there'},</p>
-      <p>Thank you for joining MSKJ CRM! We're excited to help you manage your customer relationships more effectively.</p>
+      <p>Thank you for joining SharCRM! We're excited to help you manage your customer relationships more effectively.</p>
       
       <div class="features">
         <h3 style="margin-top: 0;">Here's what you can do:</h3>
@@ -239,7 +239,7 @@ class EmailService {
     
     return this.sendEmail({
       to: user.email,
-      subject: 'Reset Your Password - MSKJ CRM',
+      subject: 'Reset Your Password - SharCRM',
       html: `
 <!DOCTYPE html>
 <html>

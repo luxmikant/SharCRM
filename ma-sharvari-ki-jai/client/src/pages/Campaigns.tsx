@@ -1,3 +1,7 @@
+/**
+ * SharCRM Campaigns - Multi-channel Campaign Management
+ * @version 2.0.0
+ */
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
@@ -111,7 +115,7 @@ export default function Campaigns() {
         '/api/ai/suggest-message',
         {
           method: 'POST',
-          body: JSON.stringify({ goal, brand: 'MSKJ', tone, channel, variables })
+          body: JSON.stringify({ goal, brand: 'SharCRM', tone, channel, variables })
         },
         token
       )
@@ -177,7 +181,7 @@ export default function Campaigns() {
                   <td>{d.status || 'draft'}</td>
                   <td>{new Date(d.createdAt).toLocaleString()}</td>
                   <td className="space-x-2">
-                    <button className="px-2 py-1 bg-blue-600 text-white rounded" onClick={()=>navigate(`/campaigns/new?restore=${d._id}`)}>Restore</button>
+                    <button className="px-2 py-1 bg-brand-500 text-gray-900 rounded" onClick={()=>navigate(`/campaigns/new?restore=${d._id}`)}>Restore</button>
                   </td>
                 </tr>
               ))}
@@ -201,7 +205,7 @@ export default function Campaigns() {
             <option value="excited">excited</option>
           </select>
           <input className="border px-2 py-1" placeholder="Variables (comma-separated)" value={variablesText} onChange={e=>setVariablesText(e.target.value)} />
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={doSuggest} disabled={suggesting}>{suggesting ? 'Suggesting…' : 'Suggest'}</button>
+          <button className="px-3 py-1 bg-brand-500 text-gray-900 rounded" onClick={doSuggest} disabled={suggesting}>{suggesting ? 'Suggesting…' : 'Suggest'}</button>
         </div>
         {variants.length > 0 && (
           <ul className="space-y-2">

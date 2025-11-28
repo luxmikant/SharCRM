@@ -1,3 +1,7 @@
+/**
+ * SharCRM Login - Google OAuth Authentication
+ * @version 2.0.0
+ */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'

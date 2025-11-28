@@ -60,7 +60,7 @@ const activityIcons: Record<string, React.ReactNode> = {
 const activityColors: Record<string, string> = {
   email_sent: 'bg-blue-100 text-blue-600',
   email_opened: 'bg-green-100 text-green-600',
-  email_clicked: 'bg-purple-100 text-purple-600',
+  email_clicked: 'bg-brand-100 text-brand-600',
   call_made: 'bg-amber-100 text-amber-600',
   note_added: 'bg-gray-100 text-gray-600',
   order_placed: 'bg-emerald-100 text-emerald-600',

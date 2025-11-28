@@ -1,3 +1,7 @@
+/**
+ * SharCRM Insights - AI-Powered Analytics Dashboard
+ * @version 2.0.0
+ */
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '../state/AuthContext'
 import { apiFetch } from '../api'

@@ -1,3 +1,7 @@
+/**
+ * SharCRM Orders - Order Tracking and Analytics
+ * @version 2.0.0
+ */
 import { useEffect, useState } from 'react'
 import { useAuth } from '../state/AuthContext'
 import { apiFetch } from '../api'

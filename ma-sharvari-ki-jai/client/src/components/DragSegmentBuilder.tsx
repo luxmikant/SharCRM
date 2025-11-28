@@ -66,8 +66,8 @@ function RuleRow({ rule, filter, onChange, onRemove }: { rule: Rule; filter: Ava
 function LogicToggle({ value, onChange, onRemove }: { value: 'AND'|'OR'; onChange: (v:'AND'|'OR')=>void; onRemove: ()=>void }) {
   return (
     <div className="flex items-center gap-2 px-2 py-1 rounded-full border bg-gray-50">
-      <button className={`px-2 py-1 rounded text-xs ${value==='AND'?'bg-blue-600 text-white':'hover:bg-gray-100'}`} onClick={()=>onChange('AND')}>AND</button>
-      <button className={`px-2 py-1 rounded text-xs ${value==='OR'?'bg-blue-600 text-white':'hover:bg-gray-100'}`} onClick={()=>onChange('OR')}>OR</button>
+      <button className={`px-2 py-1 rounded text-xs ${value==='AND'?'bg-brand-500 text-gray-900':'hover:bg-gray-100'}`} onClick={()=>onChange('AND')}>AND</button>
+      <button className={`px-2 py-1 rounded text-xs ${value==='OR'?'bg-brand-500 text-gray-900':'hover:bg-gray-100'}`} onClick={()=>onChange('OR')}>OR</button>
       <button className="text-xs text-gray-600" onClick={onRemove}>×</button>
     </div>
   )
