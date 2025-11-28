@@ -1,6 +1,7 @@
 # Semgrep rules for MSKJ CRM
 # https://semgrep.dev/docs/writing-rules/rule-syntax/
 
+
 rules:
   # Security Rules
   - id: no-hardcoded-secrets
