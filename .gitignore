@@ -8,7 +8,7 @@ node_modules/
 **/.cache/
 **/.vite/
 
-# Env files
+# Env file
 .env
 **/.env
 **/.env.*
