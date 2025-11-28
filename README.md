@@ -194,6 +194,14 @@ VITE_GOOGLE_CLIENT_ID=your-oauth-client-id
 
 ---
 
+## 📁 Repository Layout
+
+- `client/` – React + Vite frontend housed inside `ma-sharvari-ki-jai/client`.
+- `server/` – Express 5 backend powering APIs, AI services, and the MongoDB models.
+- `docs/`, `.vscode/`, `.semgrep.yml`, `render.yaml` – Tooling/configuration for documentation, IDE helpers, CI, and deployments (kept for compatibility but not featured in the product surface).
+
+Focus on the `client/` + `server/` apps for active development; the other entries stay in-tree only for historical or tooling reasons.
+
 ## 🏗 Architecture
 
 ```
