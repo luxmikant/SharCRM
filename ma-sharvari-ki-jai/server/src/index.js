@@ -1,6 +1,8 @@
+const path = require('path');
+
 if (process.env.NODE_ENV !== 'production') {
   try {
-    require('dotenv').config();
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     // eslint-disable-next-line no-console
     console.log('Development environment: Loading .env file');
   } catch {}

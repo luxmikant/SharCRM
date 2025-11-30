@@ -103,6 +103,12 @@ app.use('/api/activities', require('./routes/activityRoutes'));
 app.use('/api/sales', require('./routes/salesRoutes'));
 // Public, unauthenticated routes
 app.use('/api/public', require('./routes/publicRoutes'));
+// Telegram bot routes
+app.use('/api/telegram', require('./routes/telegramRoutes'));
+
+// Initialize Telegram bot
+const telegramService = require('./services/telegram.service');
+telegramService.initBot();
 
 // Sentry error handler (must be before other error handlers)
 if (process.env.SENTRY_DSN) {

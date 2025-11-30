@@ -1,6 +1,7 @@
 /**
  * SharCRM Campaign Controller - Multi-channel Campaign Management
  * Handles campaign creation, delivery, and analytics
+ * Supports Email, SMS, and Telegram channels
  * @version 2.0.0
  */
 const asyncHandler = require('../utils/asyncHandler');
@@ -9,6 +10,7 @@ const CommunicationLog = require('../models/CommunicationLog');
 const Segment = require('../models/Segment');
 const Customer = require('../models/Customer');
 const { buildFilter } = require('./segmentController');
+const telegramService = require('../services/telegram.service');
 
 exports.createCampaign = asyncHandler(async (req, res) => {
   const { 
@@ -47,7 +49,16 @@ exports.createCampaign = asyncHandler(async (req, res) => {
 
   const baseFilter = buildFilter(segment.rules);
   const filter = owner ? { ...baseFilter, createdBy: owner } : baseFilter;
-  const customers = await Customer.find(filter).select('_id email name phone');
+  
+  // For Telegram, only count verified subscribers
+  let customerQuery = Customer.find(filter).select('_id email name phone channels');
+  const customers = await customerQuery;
+  
+  // Filter for Telegram-enabled customers if channel is TELEGRAM
+  let eligibleCustomers = customers;
+  if (channel === 'TELEGRAM') {
+    eligibleCustomers = customers.filter(c => c.channels?.telegram?.verified);
+  }
   
   const scheduledFor = scheduleType === 'scheduled' && scheduleDate
     ? new Date(scheduleDate + 'T' + (scheduleTime || '09:00'))
@@ -71,26 +82,78 @@ exports.createCampaign = asyncHandler(async (req, res) => {
     trackClicks,
     status,
     createdBy: owner, 
-    counts: { total: customers.length },
-    metrics: { total: customers.length, sent: 0, delivered: 0, opened: 0, clicked: 0, failed: 0, bounced: 0 }
+    counts: { total: eligibleCustomers.length },
+    metrics: { total: eligibleCustomers.length, sent: 0, delivered: 0, opened: 0, clicked: 0, failed: 0, bounced: 0 }
   });
 
   // Only create logs if we're sending now, otherwise they'll be created when scheduled
   if (scheduleType === 'now') {
-    const logs = customers.map((c) => ({
-      campaignId: campaign._id,
-      customerId: c._id,
-      channel,
-      status: 'PENDING',
-      payload: { to: channel === 'EMAIL' ? c.email : c.phone, name: c.name, template, subject, preheader },
-      createdBy: owner,
-    }));
-    await CommunicationLog.insertMany(logs);
+    if (channel === 'TELEGRAM') {
+      // For Telegram, broadcast immediately
+      const result = await telegramService.broadcastCampaign(
+        campaign._id.toString(),
+        eligibleCustomers,
+        { template, subject, campaignName: name }
+      );
+      
+      // Update campaign metrics
+      await Campaign.updateOne(
+        { _id: campaign._id },
+        { 
+          $set: { 
+            'counts.sent': result.sent,
+            'counts.failed': result.failed,
+            'metrics.sent': result.sent,
+            'metrics.delivered': result.sent, // Telegram delivery is instant
+            'metrics.failed': result.failed,
+            status: 'completed',
+            completedAt: new Date()
+          }
+        }
+      );
+      
+      // Create communication logs for tracking
+      const logs = eligibleCustomers.map((c) => ({
+        campaignId: campaign._id,
+        customerId: c._id,
+        channel: 'TELEGRAM',
+        status: c.channels?.telegram?.verified ? 'SENT' : 'SKIPPED',
+        payload: { 
+          chatId: c.channels?.telegram?.chatId,
+          name: c.name, 
+          template, 
+          subject 
+        },
+        createdBy: owner,
+      }));
+      await CommunicationLog.insertMany(logs);
+      
+      return res.status(201).json({ 
+        campaignId: campaign._id, 
+        total: eligibleCustomers.length,
+        sent: result.sent,
+        failed: result.failed,
+        skipped: result.skipped,
+        status: 'completed',
+        message: `Telegram campaign sent: ${result.sent} delivered, ${result.failed} failed`
+      });
+    } else {
+      // Email/SMS flow - create pending logs
+      const logs = customers.map((c) => ({
+        campaignId: campaign._id,
+        customerId: c._id,
+        channel,
+        status: 'PENDING',
+        payload: { to: channel === 'EMAIL' ? c.email : c.phone, name: c.name, template, subject, preheader },
+        createdBy: owner,
+      }));
+      await CommunicationLog.insertMany(logs);
+    }
   }
 
   res.status(201).json({ 
     campaignId: campaign._id, 
-    total: customers.length,
+    total: eligibleCustomers.length,
     status,
     scheduledFor,
     message: scheduleType === 'draft' ? 'Campaign saved as draft' : 

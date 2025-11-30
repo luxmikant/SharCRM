@@ -1,3 +1,12 @@
+/**
+ * SharCRM Customer Model
+ * 
+ * Customer data with multi-channel communication preferences.
+ * Supports Email, SMS, and Telegram notifications.
+ * 
+ * @version 2.0.0
+ * @license MIT
+ */
 const mongoose = require('mongoose');
 
 const CustomerSchema = new mongoose.Schema(
@@ -12,6 +21,26 @@ const CustomerSchema = new mongoose.Schema(
     attributes: { type: Object, default: {} },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     externalCustomerId: { type: String, required: true },
+    
+    // Multi-channel communication preferences
+    channels: {
+      telegram: {
+        chatId: { type: String },
+        username: { type: String },
+        verified: { type: Boolean, default: false },
+        subscribedAt: { type: Date }
+      },
+      whatsapp: {
+        phone: { type: String },
+        verified: { type: Boolean, default: false },
+        subscribedAt: { type: Date }
+      },
+      email: {
+        verified: { type: Boolean, default: true },
+        unsubscribed: { type: Boolean, default: false },
+        unsubscribedAt: { type: Date }
+      }
+    }
   },
   { timestamps: true }
 );

@@ -306,10 +306,16 @@ function CreativeStep({ campaign, setCampaign, templates, loadTemplateDetails, t
                   <SelectValue placeholder="Select channel" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="EMAIL">Email</SelectItem>
-                  <SelectItem value="SMS">SMS</SelectItem>
+                  <SelectItem value="EMAIL">📧 Email</SelectItem>
+                  <SelectItem value="SMS">📱 SMS</SelectItem>
+                  <SelectItem value="TELEGRAM">✈️ Telegram</SelectItem>
                 </SelectContent>
               </Select>
+              {campaign.channel === 'TELEGRAM' && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Only customers who linked their Telegram will receive this campaign
+                </p>
+              )}
             </div>
 
             <div>

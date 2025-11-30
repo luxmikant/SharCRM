@@ -1,3 +1,12 @@
+/**
+ * SharCRM Campaign Model
+ * 
+ * Multi-channel marketing campaign management.
+ * Supports Email, SMS, and Telegram channels.
+ * 
+ * @version 2.0.0
+ * @license MIT
+ */
 const mongoose = require('mongoose');
 
 const CampaignSchema = new mongoose.Schema(
@@ -5,7 +14,7 @@ const CampaignSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
     segmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Segment', required: true, index: true },
-    channel: { type: String, enum: ['EMAIL', 'SMS'], required: true },
+    channel: { type: String, enum: ['EMAIL', 'SMS', 'TELEGRAM'], required: true },
     template: { type: String, required: true },
     subject: { type: String, trim: true },
     preheader: { type: String, trim: true },
